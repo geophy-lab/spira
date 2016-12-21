@@ -192,7 +192,6 @@ module Spira
       # @param [Hash{Symbol => Any}] attributes Initial attributes
       # @return [Spira::Base] the newly created instance
       def project(subject, attributes = {}, &block)
-        puts attributes.inspect
         new(attributes.merge(:_subject => subject), &block)
       end
 
