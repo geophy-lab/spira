@@ -53,6 +53,16 @@ module Spira
       end
 
       ##
+      # The graph URI for this class.
+      #
+      # @return [Void]
+      def graph
+        # should be redefined in children, if required
+        # see also Spira::Resource.configure :graph option
+        nil
+      end
+
+      ##
       # The default vocabulary for this class.  Setting a default vocabulary
       # will allow properties to be defined without a `:predicate` option.
       # Predicates will instead be created by appending the property name to

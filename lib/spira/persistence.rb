@@ -192,6 +192,7 @@ module Spira
       # @param [Hash{Symbol => Any}] attributes Initial attributes
       # @return [Spira::Base] the newly created instance
       def project(subject, attributes = {}, &block)
+        puts attributes.inspect
         new(attributes.merge(:_subject => subject), &block)
       end
 
@@ -397,6 +398,7 @@ module Spira
     #
     def persist!
       repo = self.class.repository
+      graph = self.class.graph
       self.class.properties.each do |name, property|
         value = read_attribute name
         if self.class.reflect_on_association(name)
@@ -421,7 +423,7 @@ module Spira
       types.each do |type|
         # NB: repository won't accept duplicates,
         #     but this should be avoided anyway, for performance
-        repo.insert RDF::Statement.new(subject, RDF.type, type)
+        repo.insert RDF::Statement.new(subject, RDF.type, type, graph_name: graph)
       end
     end
 
@@ -438,7 +440,8 @@ module Spira
     def store_attribute(property, value, predicate, repository)
       unless value.nil?
         val = build_rdf_value(value, self.class.properties[property][:type])
-        repository.insert RDF::Statement.new(subject, predicate, val) if valid_object?(val)
+        graph = self.class.graph
+        repository.insert RDF::Statement.new(subject, predicate, val, graph_name: graph) if valid_object?(val)
       end
     end
 

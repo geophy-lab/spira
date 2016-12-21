@@ -10,13 +10,15 @@ module Spira
     #   :base_uri           :: base URI to be used for the resource
     #   :default_vocabulary :: default vocabulary to use for the properties
     #                          defined for this resource
+    #   :graph              :: URI to be used for the graph
     # All these configuration options are readable via
     # their respectively named Spira resource methods.
     #
     def configure(options = {})
       singleton_class.class_eval do
         { :base_uri => options[:base_uri],
-          :default_vocabulary => options[:default_vocabulary]
+          :default_vocabulary => options[:default_vocabulary],
+          :graph => options[:graph]
         }.each do |name, value|
           # redefine reader methods only when required,
           # otherwise, use the ancestor methods
