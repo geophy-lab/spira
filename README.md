@@ -257,6 +257,10 @@ A class declares property members with the `property` function.  See `Property O
 
 A class declares list members with the `has_many` function.  See `Property Options` for more information.
 
+#### graph
+
+A class with a `graph` will save their properties to that graph.
+
 #### default_vocabulary
 
 A class with a `default_vocabulary` set will transparently create predicates for defined properties:
@@ -264,7 +268,8 @@ A class with a `default_vocabulary` set will transparently create predicates for
 ```ruby
 class Song < Spira::Base
   configure :default_vocabulary => URI.new('http://example.org/vocab'),
-            :base_uri => 'http://example.org/songs'
+            :base_uri => 'http://example.org/songs', 
+            :graph => 'http://example.org/graph'
   property :title
   property :author, :type => :artist
 end
